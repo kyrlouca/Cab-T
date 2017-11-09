@@ -1,0 +1,10 @@
+*.dcu
+*.FDB
+*.exe
+*.fff
+*.~*
+*.stat
+*.cache
+TariffsProject.identcache
+TariffsProject.stat
+TariffsProject.dproj.local

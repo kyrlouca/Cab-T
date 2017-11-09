@@ -1,0 +1,407 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{1A344599-1F0A-4FD6-B26C-9F17EC21AFE9}</ProjectGuid>
+        <MainSource>CabT.dpr</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Release</Config>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Application</AppType>
+        <FrameworkType>VCL</FrameworkType>
+        <ProjectVersion>18.2</ProjectVersion>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_E>false</DCC_E>
+        <DCC_F>false</DCC_F>
+        <DCC_K>false</DCC_K>
+        <DCC_N>true</DCC_N>
+        <DCC_S>false</DCC_S>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <DCC_Alignment>1</DCC_Alignment>
+        <DCC_DebugInformation>1</DCC_DebugInformation>
+        <DCC_WriteableConstants>true</DCC_WriteableConstants>
+        <DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+        <DCC_ExeOutput>C:\Data\DelphiProjects\TokyoCabT\EXE\</DCC_ExeOutput>
+        <DCC_DcuOutput>C:\Data\DelphiProjects\TokyoCabT\programs\</DCC_DcuOutput>
+        <DCC_BplOutput>C:\Data\DelphiProjects\Tariffs\programs\</DCC_BplOutput>
+        <DCC_DcpOutput>C:\Data\DelphiProjects\TokyoCabT\EXE\</DCC_DcpOutput>
+        <DCC_UnitSearchPath>C:\Data\DelphiProjects\Tariffs\programs\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DebugSourcePath>C:\Data\DelphiProjects\Tariffs;$(DebugSourcePath)</DebugSourcePath>
+        <DCC_UsePackage>Vcl50;Vclx50;VclSmp50;Vcldb50;ibevnt50;Vclbde50;vcldbx50;Qrpt50;TeeUI50;TeeDB50;Tee50;Dss50;TeeQR50;VCLIB50;Vclmid50;vclie50;Inetdb50;Inet50;NMFast50;webmid50;dclocx50;dclaxserver50;ip50client_d5;ip50_d5;ip50word_d5;FirstClass_d5;rbRCL75;rbBDE75;rbUSER75;vclado50;UnicodeConvDelphi5;rbTDBC75;dac50;crcontrols50;ibdac50;XmlComponents_D5;$(DCC_UsePackage)</DCC_UsePackage>
+        <SanitizedProjectName>CabT</SanitizedProjectName>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>2057</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <Custom_Styles>Windows10|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows10.vsf</Custom_Styles>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <Icon_MainIcon>TariffsProject_Icon.ico</Icon_MainIcon>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_ExeOutput>C:\Data\DelphiProjects\TokyoCabT\EXE\</DCC_ExeOutput>
+        <DCC_DcpOutput>C:\Data\DelphiProjects\TokyoCabT\EXE\</DCC_DcpOutput>
+        <DCC_BplOutput>C:\Data\DelphiProjects\Tariffs\programs\</DCC_BplOutput>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppEnableHighDPI>true</AppEnableHighDPI>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <Icon_MainIcon>CabT_Icon.ico</Icon_MainIcon>
+        <DCC_ExeOutput>C:\Data\DelphiProjects\TokyoCabT\EXE\</DCC_ExeOutput>
+        <DCC_BplOutput>C:\Data\DelphiProjects\TokyoCabT\EXE\</DCC_BplOutput>
+        <DCC_DcpOutput>C:\Data\DelphiProjects\TokyoCabT\EXE\</DCC_DcpOutput>
+        <DCC_DcuOutput>C:\Data\DelphiProjects\TokyoCabT\DCU\</DCC_DcuOutput>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppEnableHighDPI>true</AppEnableHighDPI>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <DCC_BplOutput>C:\Data\DelphiProjects\TokyoCabT\programs\</DCC_BplOutput>
+        <DCC_DcuOutput>C:\Data\DelphiProjects\TokyoCabT\DCU\</DCC_DcuOutput>
+        <DCC_UnitSearchPath>C:\Data\DelphiProjects\TokyoCabT\programs\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_OutputXMLDocumentation>true</DCC_OutputXMLDocumentation>
+        <Icon_MainIcon>CabT_Icon3.ico</Icon_MainIcon>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="MainFFF.pas">
+            <Form>MainFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_BaseTariff.pas">
+            <Form>M_BaseTariffFRM</Form>
+        </DCCReference>
+        <DCCReference Include="V_hawb.pas">
+            <Form>V_HawbFRM</Form>
+        </DCCReference>
+        <DCCReference Include="LN_ListBaseTariffs.pas">
+            <Form>LN_ListBaseTariffsFRM</Form>
+        </DCCReference>
+        <DCCReference Include="G_KyrSQL.pas"/>
+        <DCCReference Include="LN_RelievedCodes.pas">
+            <Form>LN_RelievedCodesFRM</Form>
+        </DCCReference>
+        <DCCReference Include="G_generalProcs.pas"/>
+        <DCCReference Include="G_kyriacosTypes.pas"/>
+        <DCCReference Include="S_selectTariffV1.pas">
+            <Form>S_SelectTariffV1FRM</Form>
+        </DCCReference>
+        <DCCReference Include="U_ClairDML.pas">
+            <Form>ClairDML</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="M_Units.pas">
+            <Form>M_UnitsFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_STariffX1.pas">
+            <Form>M_StariffX1FRM</Form>
+        </DCCReference>
+        <DCCReference Include="testUnit.pas">
+            <Form>TestUnitFRM</Form>
+        </DCCReference>
+        <DCCReference Include="G_DebugUnit.pas"/>
+        <DCCReference Include="LN_ListGroupTariffs.pas">
+            <Form>LN_ListGroupTariffsFRM</Form>
+        </DCCReference>
+        <DCCReference Include="V_hawbItem4.pas">
+            <Form>V_hawbItemFRM4</Form>
+        </DCCReference>
+        <DCCReference Include="testFrame.pas">
+            <Form>Form2</Form>
+        </DCCReference>
+        <DCCReference Include="V_Mawb.pas">
+            <Form>V_MawbFRM</Form>
+        </DCCReference>
+        <DCCReference Include="V_MawbData.pas">
+            <Form>V_MawbDataDML</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="M_customerNew.pas">
+            <Form>M_CustomerNewFRM</Form>
+        </DCCReference>
+        <DCCReference Include="S_selectCustomer.pas">
+            <Form>S_SelectCustomerFRM</Form>
+        </DCCReference>
+        <DCCReference Include="V_hawbData.pas">
+            <Form>V_HawbDataDML</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="V_MawbHawb.pas">
+            <Form>V_MawbHawbDML</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="U_generateInv.pas">
+            <Form>U_GenerateInvFRM</Form>
+        </DCCReference>
+        <DCCReference Include="C_ListCustomPayments.pas">
+            <Form>C_ListCustomPaymentsFRM</Form>
+        </DCCReference>
+        <DCCReference Include="C_CustomsPayment.pas">
+            <Form>C_CustomsPaymentFRM</Form>
+        </DCCReference>
+        <DCCReference Include="C_ScanCustomPayment.pas">
+            <Form>C_ScanCustomPaymentFRM</Form>
+        </DCCReference>
+        <DCCReference Include="C_CustomsHawbPayment.pas">
+            <Form>C_CustomsHawbPaymentFRM</Form>
+        </DCCReference>
+        <DCCReference Include="c_readDHLInvoices.pas">
+            <Form>C_ReadDhlInvoicesFRM</Form>
+        </DCCReference>
+        <DCCReference Include="g_sendEmail.pas"/>
+        <DCCReference Include="D_SendSMS.pas">
+            <Form>D_SendSMSFRM</Form>
+        </DCCReference>
+        <DCCReference Include="X_readFile.pas">
+            <Form>X_readFileFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_CHangeMawbID.pas">
+            <Form>M_ChangeMawbIDFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_tariffKeys.pas">
+            <Form>R_TariffKeysFRM</Form>
+        </DCCReference>
+        <DCCReference Include="I_ReadTariffKeys.pas">
+            <Form>I_ReadTariffKeysFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_SearchHawbSimple.pas">
+            <Form>R_SearchHawbSimpleFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_SearchLowValue.pas">
+            <Form>R_SearchLowValueFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_Flight.pas">
+            <Form>M_FlightFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_ExchangeRate.pas">
+            <Form>M_ExchangeRateFRM</Form>
+        </DCCReference>
+        <DCCReference Include="U_Country.pas">
+            <Form>U_CountryFRM</Form>
+        </DCCReference>
+        <DCCReference Include="U_currency.pas">
+            <Form>U_CurrencyFRM</Form>
+        </DCCReference>
+        <DCCReference Include="U_District.pas">
+            <Form>U_DistrictFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_modifyHawb.pas">
+            <Form>M_ModifyHawbFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_CustomPaymentType.pas">
+            <Form>M_customPaymentTypeFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_clearanceWaitingCode.pas">
+            <Form>M_ClearanceWaitingCodeFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_XMLParam.pas">
+            <Form>M_XmlParamFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_Parameters.pas">
+            <Form>M_ParametersFRM</Form>
+        </DCCReference>
+        <DCCReference Include="SN_SecurityAccess.pas">
+            <Form>SN_SecurityAccessFRM</Form>
+        </DCCReference>
+        <DCCReference Include="SN_User.pas">
+            <Form>SN_UserFRM</Form>
+        </DCCReference>
+        <DCCReference Include="SN_Login.pas">
+            <Form>SN_LoginFRm</Form>
+        </DCCReference>
+        <DCCReference Include="TestForm.pas">
+            <Form>TestFormFRM</Form>
+        </DCCReference>
+        <DCCReference Include="H_HawbPartial.pas">
+            <Form>H_hawbPartialFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_UnclearedHawbs.pas">
+            <Form>R_UnclearedHawbsFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_uninvoicedHawbs.pas">
+            <Form>R_uninvoicedHawbsFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_CustsomersAll.pas">
+            <Form>R_CustomersAllFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_MawbPerformanceNew.pas">
+            <Form>R_MawbPerformanceNewFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_deliveryOrderLow1.pas">
+            <Form>R_DeliveryOrderLow1FRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_HawbsToReceive.pas">
+            <Form>R_HawbsToReceiveFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_port.pas">
+            <Form>M_portFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_DisplayHawbCharges.pas">
+            <Form>R_DisplayHawbChargesFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_printMultiInvoice.pas">
+            <Form>R_PrintMultiInvoiceFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_HawbStatusCDeleted.pas">
+            <Form>R_HawbStatusCDeletedFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_printEdeDelivery.pas">
+            <Form>R_PrintEdeDeliveryFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_WorkinghSheetNew.pas">
+            <Form>R_WorkingSheetNewFRM</Form>
+        </DCCReference>
+        <DCCReference Include="P_SingleEDENew.pas">
+            <Form>P_singelEdeNewFRM</Form>
+        </DCCReference>
+        <DCCReference Include="H_Help.pas">
+            <Form>H_HelpFRM</Form>
+        </DCCReference>
+        <DCCReference Include="DeliveryOrder.pas">
+            <Form>DeliveryOrderFRM</Form>
+        </DCCReference>
+        <DCCReference Include="G_OtherProcs.pas"/>
+        <DCCReference Include="M_tariffLine.pas">
+            <Form>M_tariffLineFRM</Form>
+        </DCCReference>
+        <DCCReference Include="SN_ModifyPassword.pas">
+            <Form>SN_ModifyPasswordFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_EmailMessages.pas">
+            <Form>M_EmailMessagesFRM</Form>
+        </DCCReference>
+        <DCCReference Include="P_MultiEDE.pas">
+            <Form>P_MultiEdeFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_DeleteMawb.pas">
+            <Form>M_DeleteMawbFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_CustomPaymentCodes.pas">
+            <Form>M_CustomPaymentCodesFRM</Form>
+        </DCCReference>
+        <DCCReference Include="R_GlobalDhlInvoices.pas">
+            <Form>R_GlobalDhlInvoicesFRM</Form>
+        </DCCReference>
+        <DCCReference Include="M_HawbCharge.pas">
+            <Form>M_HawbChargeFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="M_deliveryTerm.pas">
+            <Form>M_deliveryTermFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="I_createWarehouseXml.pas">
+            <Form>I_createWarehouseXmlFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="R_MediumHawb.pas">
+            <Form>R_MediumHawbFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="R_mediumNew.pas">
+            <Form>R_MediumNewFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="I_createInvoiceFile.pas">
+            <Form>I_createInvoiceFileFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="M_TariffCertificates.pas">
+            <Form>M_TariffCertificatesFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="M_ChangeStatusBatch.pas">
+            <Form>M_ChangeStatusBatchFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="M_STariffDelete.pas">
+            <Form>M_STariffDeleteFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <None Include="TariffsProject.todo">
+            <ContainerId>ToDo</ContainerId>
+        </None>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">CabT.dpr</Source>
+                </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\ipstudiowinwordxp250.bpl">Woll2Woll InfoPower RichEdit for MSWord XP</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>
