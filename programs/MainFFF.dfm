@@ -120,7 +120,7 @@ object MainFRM: TMainFRM
     Margins.Bottom = 0
     Align = alTop
     BorderOuter = fsGroove
-    Caption = 'CAB-T 1.74'
+    Caption = 'CAB-T 1.75'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
     Font.Height = -48

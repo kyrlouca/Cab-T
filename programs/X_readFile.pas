@@ -1287,7 +1287,7 @@ begin
     end;
     HawbItemSQL.FieldByName('WEIGHT_NET').value:=Weight;
 
-  HawbItemSQL.FieldByName('FK_COUNTRY_ORIGIN').value    :=FindCountry(hawbItemNode.ChildNodes['CtryOrgnCd'].Text);
+  HawbItemSQL.FieldByName('FK_COUNTRY_ORIGIN').value    :=FindCountry(hawbItemNode.ChildNodes['CtryMfctrerOrgn'].Text);
 
   HawbItemSQL.FieldByName('unit').value    :=FindDefaultUnit();
 
