@@ -109,6 +109,15 @@ var
   countRecs:integer;
   temp,str:String;
   HawbId:String;
+  HawbDescription:String;
+  HawbOrigin:String;
+  CustomerName:String;
+  cu_name,cu_addr1,cu_addr2,cu_addr3,cu_postCode,cu_city,cu_phone:String;
+  se_name,se_addr1,se_addr2,se_addr3,se_postCode,se_city,se_country ,Se_phone:String;
+  inv_dateInvoiced:TDate;
+  inv_CustomerAccount,Inv_payType:String;
+  inv_TotalPieces:Integer;
+
   Amount:Double;
  qrHawb:TksQuery;
 begin
@@ -137,9 +146,10 @@ begin
 
 
   HeaderNode:=RootNode.AddChild('Hdr');
+  AddAtrribute(HeaderNode,'Id','INV-POD');
   AddAtrribute(HeaderNode,'Ver','1.033');
-  AddAtrribute(HeaderNode,'Dtm','1.033');
-  AddAtrribute(HeaderNode,'GmtOff','1.033');
+  AddAtrribute(HeaderNode,'Dtm','x');
+  AddAtrribute(HeaderNode,'GmtOff','7');
 //  aNode:= AddNodeText(HeaderNode, 'MsgMajVsn','1');
 //  aNode:= AddNodeText(HeaderNode, 'CrtnDm',FormatTimeStampUTCF(now));
 //  function ToUniversalTime(const ADateTime: TDateTime; const ForceDaylight: Boolean = False): TDateTime; inline;
@@ -147,10 +157,63 @@ begin
 
    aNode := HeaderNode.AddChild('Sndr');
 
-   AddAtrribute(aNode,'AppCd','1.033');
-   AddAtrribute(aNode,'AppVer','1.033');
-   AddAtrribute(aNode,'CtryCd','1.033');
+   AddAtrribute(aNode,'AppCd','CABT');
+   AddAtrribute(aNode,'AppVer','1.80');
+   AddAtrribute(aNode,'CtryCd','CY');
    AddAtrribute(aNode,'AppNm','1.033');
+   AddAtrribute(aNode,'PrcsId','001');
+
+
+  try
+   str:=
+  ' select'
+  +'      inv.*,'
+  +'      ha.description,ha.fk_country_origin,'
+  +'      ha.sender_name,ha.sender_address_1,ha.sender_address_2,ha.sender_address_3,ha.sender_post_code,ha.sender_city,ha.sender_country,'
+  +'      HA.total_num_of_pieces, ha.fk_clearance_instruction,'
+  +'      cu.address1, cu.address2,cu.address3, cu.address_post_code,cu.address_city,cu.tel_no1'
+  +'  from'
+  +'      invoice_new inv left outer join'
+  +'      Hawb ha on inv.hawb_serial=ha.serial_number left outer join'
+  +'      Customer cu on cu.code= ha.fk_customer_code'
+  +'  where inv.serial_number= :InvoiceSerial';
+
+    qrHawb:=TksQuery.Create(cn,str);
+    qrHawb.ParamByName('InvoiceSerial').AsInteger:= InvoiceSerial;
+    qrHawb.Open;
+
+    HawbId:=qrHawb.FieldByName('hawb_id').AsString;
+    HawbDescription:=qrHawb.FieldByName('hawb_description').AsString;
+    HawbOrigin:=qrHawb.FieldByName('fk_country_origin').AsString;
+
+    Cu_Name:=qrHawb.FieldByName('Customer_name').AsString;
+    Cu_addr1:=qrHawb.FieldByName('address1').AsString;
+    Cu_addr2:=qrHawb.FieldByName('address2').AsString;
+    Cu_addr3:=qrHawb.FieldByName('address3').AsString;
+    Cu_PostCode:=qrHawb.FieldByName('address_Post_code').AsString;
+    Cu_City:=qrHawb.FieldByName('address_City').AsString;
+    Cu_Phone:=qrHawb.FieldByName('TEL_NO1').AsString;
+
+    se_Name:=qrHawb.FieldByName('Sender_name').AsString;
+    Se_addr1:=qrHawb.FieldByName('Sender_address_1').AsString;
+    SE_addr2:=qrHawb.FieldByName('Sender_address_2').AsString;
+    Se_addr3:=qrHawb.FieldByName('Sender_address_3').AsString;
+    Se_PostCode:=qrHawb.FieldByName('Sender_Post_code').AsString;
+    Se_City:=qrHawb.FieldByName('Sender_City').AsString;
+    Se_Country:=qrHawb.FieldByName('Sender_country').AsString;
+
+    inv_dateInvoiced:=qrHawb.FieldByName('DATE_INVOICED').AsDateTime;
+    inv_TotalPieces :=qrHawb.FieldByName('total_num_of_pieces').AsInteger;
+    inv_payType:=qrHawb.FieldByName('fk_clearance_instruction').AsString;
+
+//    aNode:=AddNodeText(HawbNode,'Tmstmp',FormatTimeStampUTCF(now));
+
+  finally
+    qrHawb.Close;
+    qrHawb.Free;
+  end;
+
+
 
 
    bdNode:=RootNOde.AddChild('Bd',-1);
@@ -176,73 +239,77 @@ begin
         AddAtrribute(aNode,'AttNm','1.033');
         AddAtrribute(aNode,'AttVal','1.033');
 
-  try
-    str:= 'select ha.serial_number,ha.hab_id,ha.fk_mawb_refer_number ,ha.date_registered'
-+'     ,ha.clearance_waiting_code,cwc.is_cleared'
-+'      ,HA.ORIGIN_STATION, HA.DESTINATION_STATION, ma.mawb_id'
-+'      from hawb ha'
-+'      left outer join mawb ma on ha.fk_mawb_refer_number=ma.reference_number'
-+'      left outer join clearance_waiting_code cwc on cwc.code=ha.clearance_waiting_code'
-+'      where ha.serial_number = :HawbSerial';
-
-    qrHawb:=TksQuery.Create(cn,str);
-    qrHawb.ParamByName('HawbSerial').AsInteger:= 11;
-    qrHawb.Open;
-
-    HawbNode:=InvNode.AddChild('af',-1);
-    bNode:=AddNodeText(HawbNode,'ShpAWBNum',qrHawb.FieldByName('hab_id').AsString);
-
-    aNode:=AddNodeText(HawbNode,'Tmstmp',FormatTimeStampUTCF(now));
-
-    temp:=Trim(qrHawb.FieldByName('is_cLEARED').AsString);
-    if Temp='' then temp:='N';
-    aNode:=AddNodeText(HawbNode,'ClrFlg',temp);
-
-    aNode:=AddNodeText(HawbNode,'ShpSts',qrHawb.FieldByName('CLEARANCE_WAITING_CODE').AsString);
-    aNode:=AddNodeText(HawbNode,'OrgnSrvaCd',qrHawb.FieldByName('ORIGIN_STATION').AsString);
-    aNode:=AddNodeText(HawbNode,'DestSrvaCd',qrHawb.FieldByName('DESTINATION_STATION').AsString);
-
-  finally
-    qrHawb.Close;
-    qrHawb.Free;
-  end;
 
   shpNode:=bdNOde.AddChild('Shp',-1);
-  AddAtrribute(shpNode,'id','id');
+  AddAtrribute(shpNode,'id',HawbId);
 
   ///////////////////////////////////////
   aNode:=shpNOde.AddChild('ShpTr',-1);
-  AddAtrribute(aNode,'DstSrvaCd','xx');
-  AddAtrribute(aNode,'OrgSrvaCd','xx');
-  AddAtrribute(aNode,'MgNProdCd','xx');
+  AddAtrribute(aNode,'DstSrvaCd','LCA');
+  AddAtrribute(aNode,'OrgSrvaCd',HawbOrigin);
+//  AddAtrribute(aNode,'MgNProdCd','xx');
   AddAtrribute(aNode,'SActWgt','xx');
-  AddAtrribute(aNode,'PuDtm','xx');
-  AddAtrribute(aNode,'TrmTrdCd','xx');
-
+//  AddAtrribute(aNode,'PuDtm','xx');
+//  AddAtrribute(aNode,'TrmTrdCd','xx');
+////////////////////////////////////////////
   bNode:=aNOde.AddChild('SCDtl',-1);
-  AddAtrribute(bNode,'CRlTyCd','xx');
-  AddAtrribute(bNode,'CustNm','xx');
-  AddAtrribute(bNode,'CntNm','xx');
-  AddAtrribute(bNode,'Addr1','xx');
-  AddAtrribute(bNode,'Addr2','xx');
-  AddAtrribute(bNode,'Addr3','xx');
-  AddAtrribute(bNode,'Zip','xx');
-  AddAtrribute(bNode,'CtyNm','xx');
-  AddAtrribute(bNode,'CDivCd','xx');
+  AddAtrribute(bNode,'CRlTyCd','BT');
+  AddAtrribute(bNode,'CustNm','xx');//standard for normal, Special for DTP, and Customer Account if exists
+  AddAtrribute(bNode,'CntNm',Cu_name);
+  AddAtrribute(bNode,'Addr1',CU_addr1);
+  AddAtrribute(bNode,'Addr2',cu_addr2);
+  AddAtrribute(bNode,'Addr3',Cu_addr3);
+  AddAtrribute(bNode,'Zip',cu_postCode);
+  AddAtrribute(bNode,'CtyNm',cu_city);
+  AddAtrribute(bNode,'CDivCd',Cu_phone);
 
   aNode:=bNOde.AddChild('SCCDev',-1);
   AddAtrribute(aNode,'CDevTyCd','xx');
   AddAtrribute(aNode,'CDevNo','xx');
   ///////////////////////////////////////
+    bNode:=aNOde.AddChild('SCDtl',-1);
+  AddAtrribute(bNode,'CRlTyCd','RV');
+  AddAtrribute(bNode,'CustNm','xx');//standard for normal, Special for DTP, and Customer Account if exists
+  AddAtrribute(bNode,'CntNm',Cu_Name);
+  AddAtrribute(bNode,'Addr1',CU_addr1);
+  AddAtrribute(bNode,'Addr2',cu_addr2);
+  AddAtrribute(bNode,'Addr3',Cu_addr3);
+  AddAtrribute(bNode,'Zip',cu_postCode);
+  AddAtrribute(bNode,'CtyNm',cu_city);
+  AddAtrribute(bNode,'CDivCd',Cu_phone);
+
+  aNode:=bNOde.AddChild('SCCDev',-1);
+  AddAtrribute(aNode,'CDevTyCd','xx');
+  AddAtrribute(aNode,'CDevNo','xx');
+  ///////////////////////////////////////
+  bNode:=aNOde.AddChild('SCDtl',-1);
+  AddAtrribute(bNode,'CRlTyCd','SP');
+  AddAtrribute(bNode,'CustNm','xx');//standard for normal, Special for DTP, and Customer Account if exists
+  AddAtrribute(bNode,'CntNm',Se_name);
+  AddAtrribute(bNode,'Addr1',Se_addr1);
+  AddAtrribute(bNode,'Addr2',Se_addr2);
+  AddAtrribute(bNode,'Addr3',Se_addr3);
+  AddAtrribute(bNode,'Zip',Se_postCode);
+  AddAtrribute(bNode,'CtyNm',Se_city);
+  AddAtrribute(bNode,'CDivCd',Se_phone);
+
+  aNode:=bNOde.AddChild('SCCDev',-1);
+  AddAtrribute(aNode,'CDevTyCd','xx');
+  AddAtrribute(aNode,'CDevNo','xx');
+  ///////////////////////////////////////
+
+  ///
+  ///
+  ///
   aNode:=shpNOde.AddChild('ShpDsc',-1);
-  AddAtrribute(aNode,'DscGds','id');
+  AddAtrribute(aNode,'DscGds',HawbDescription);
 
   bNode:=shpNOde.AddChild('ShpRef',-1);
   AddAtrribute(bNode,'ShpRef','id');
 
-  aNode:=shpNOde.AddChild('ShpInDoc',-1);
-    bNode:=aNOde.AddChild('SDoc',-1);
-    AddAtrribute(bNode,'InctrmCd','id');
+//  aNode:=shpNOde.AddChild('ShpInDoc',-1);
+//    bNode:=aNOde.AddChild('SDoc',-1);
+//    AddAtrribute(bNode,'InctrmCd','id');
 
   aNode:=shpNOde.AddChild('ShpRef',-1);
     AddAtrribute(aNode,'ShpRef','id');
