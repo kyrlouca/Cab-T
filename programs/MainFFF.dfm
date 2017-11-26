@@ -290,7 +290,6 @@ object MainFRM: TMainFRM
       Height = 25
       Caption = 'TestUnit'
       TabOrder = 0
-      Visible = False
       OnClick = Button4Click
     end
     object Button15: TButton

@@ -270,7 +270,8 @@ end;
 procedure TMainFRM.Button4Click(Sender: TObject);
 begin
 //testUnitFRM.ShowModal;
-TestFormFRM.ShowModal;
+//TestFormFRM.ShowModal;
+gpShowModal(TI_createInvoiceFileFRM);
 end;
 
 procedure TMainFRM.Button6Click(Sender: TObject);

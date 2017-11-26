@@ -102,7 +102,7 @@ function TI_CreateInvoiceXmlFRM.CreateFile(Const FileName:String;Const InvoiceSe
 var
 //  FileName:string;
   TheDoc: IXmlDocument;
-  RootNode,HeaderNode,HawbNode,InvoicesNode,InvNode,invLineNode, cuNode,linesNode,aNode,AddressNode: IXmlNode;
+  RootNode,HeaderNode,HawbNode,InvoicesNode,InvNode,invLineNode, bdNode,linesNode,aNode,AddressNode: IXmlNode;
   strXML:String;
   i,j:Integer;
   countRecs:integer;
@@ -136,25 +136,28 @@ begin
 
 
   HeaderNode:=RootNode.AddChild('Hdr');
-  AddNodeAtr(HeaderNode,'Ver','1.033');
-  AddNodeAtr(HeaderNode,'Dtm','1.033');
-  AddNodeAtr(HeaderNode,'GmtOff','1.033');
+  AddAtrribute(HeaderNode,'Ver','1.033');
+  AddAtrribute(HeaderNode,'Dtm','1.033');
+  AddAtrribute(HeaderNode,'GmtOff','1.033');
 //  aNode:= AddNodeText(HeaderNode, 'MsgMajVsn','1');
 //  aNode:= AddNodeText(HeaderNode, 'CrtnDm',FormatTimeStampUTCF(now));
 //  function ToUniversalTime(const ADateTime: TDateTime; const ForceDaylight: Boolean = False): TDateTime; inline;
 //  aNode:= AddNodeText(HeaderNode, 'LastProcessedDm',FormatTimeStampUTCF(now));
 
-//  aNode:=HeaderNOde.AddChild('Sndr');
-   aNode := LDocument.CreateNode('Sndr', ntElement, '');
-   HeaderNode.ChildNodes.Add(aNode);
-   AddNodeAtr(aNode,'AppCd','1.033');
-   AddNodeAtr(aNode,'AppVer','1.033');
+   aNode := HeaderNode.AddChild('Sndr');
+
+   AddAtrribute(aNode,'AppCd','1.033');
+   AddAtrribute(aNode,'AppVer','1.033');
+   AddAtrribute(aNode,'CtryCd','1.033');
+   AddAtrribute(aNode,'AppNm','1.033');
 
 
+   bdNode:=RootNOde.AddChild('Bd',-1);
 
 
 /////////////////////////////////////////////////////
 
+    InvNode:=bdNode.AddChild('Inv',-1);
   try
     str:= 'select ha.serial_number,ha.hab_id,ha.fk_mawb_refer_number ,ha.date_registered'
 +'     ,ha.clearance_waiting_code,cwc.is_cleared'
@@ -168,7 +171,7 @@ begin
     qrHawb.ParamByName('HawbSerial').AsInteger:= 11;
     qrHawb.Open;
 
-    HawbNode:=RootNOde.AddChild('Bd',-1);
+    HawbNode:=InvNode.AddChild('af',-1);
     aNode:=AddNodeText(HawbNode,'ShpAWBNum',qrHawb.FieldByName('hab_id').AsString);
 
     aNode:=AddNodeText(HawbNode,'Tmstmp',FormatTimeStampUTCF(now));
@@ -185,6 +188,16 @@ begin
     qrHawb.Close;
     qrHawb.Free;
   end;
+
+  aNode:=bdNOde.AddChild('Shp',-1);
+  AddAtrribute(aNode,'id','id');
+
+  aNode:=bdNOde.AddChild('GEvt',-1);
+  AddAtrribute(aNode,'MvmtId','id');
+  AddAtrribute(aNode,'EvtDtm','id');
+
+  aNode:=bdNOde.AddChild('Mvmt',-1);
+  AddAtrribute(aNode,'MvmtSc','id');
 
   TheDoc.SaveToFile(FileName);
   TheDoc.Active := false;
