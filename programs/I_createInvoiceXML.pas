@@ -1,4 +1,4 @@
-unit I_createWarehouseXml;
+unit I_createInvoiceXML;
 
 interface
 
@@ -18,7 +18,7 @@ type
     CountRecs:integer;
   End;
 
-  TI_createWarehouseXmlFRM = class(TForm)
+  TI_CreateInvoiceXmlFRM = class(TForm)
     Panel2: TRzPanel;
     RzPanel1: TRzPanel;
     RzBitBtn1: TRzBitBtn;
@@ -44,17 +44,18 @@ type
     Function  AddAtrribute(aNode:IXMLNode; AttributeName:String;AttributeText:String):IXMLNode;
     function FindSerials():TSerials;
 
-    function CreateFile(Const FileName:String;Const HawbSerial:integer):Integer;
+//    function CreateFile(Const FileName:String;Const HawbSerial:integer):Integer;
 
   public
     { Public declarations }
     IN_hawbSerial:Integer;
     IN_FileName:String;
+    function CreateFile(Const FileName:String;Const InvoiceSerial:Integer):Boolean;
     Procedure CreateXML;
   end;
 
 var
-  I_createWarehouseXmlFRM: TI_createWarehouseXmlFRM;
+  I_CreateInvoiceXmlFRM: TI_CreateInvoiceXmlFRM;
 
 implementation
 
@@ -62,7 +63,7 @@ implementation
 
 uses U_ClairDML, G_KyrSQL, G_generalProcs;
 
-procedure TI_createWarehouseXmlFRM.CreateBTNClick(Sender: TObject);
+procedure TI_CreateInvoiceXmlFRM.CreateBTNClick(Sender: TObject);
 var
   fileName:string;
   FromSerial,ToSerial:Integer;
@@ -74,7 +75,7 @@ var
 begin
 
 
-  paramsRec:=GetTheSystemParameter(cn,'IG2');
+  paramsRec:=GetTheSystemParameter(cn,'IG6');
   if (not DirectoryExists(ParamsRec.P_String1)) then begin
      MessageDlg('Directory Specified NOT valid. Menu->System->system params->create XML', mtError, [mbOK], 0);
      exit;
@@ -86,18 +87,18 @@ begin
   CreateFile(filename,IN_HawbSerial);
 end;
 
-procedure TI_createWarehouseXmlFRM.RzBitBtn1Click(Sender: TObject);
+procedure TI_CreateInvoiceXmlFRM.RzBitBtn1Click(Sender: TObject);
 begin
 close;
 end;
 
-Procedure TI_createWarehouseXmlFRM.CreateXML;
+Procedure TI_CreateInvoiceXmlFRM.CreateXML;
 begin
   CreateFile(IN_FileName,IN_hawbSerial);
 end;
 
 
-function TI_createWarehouseXmlFRM.CreateFile(Const FileName:String;Const HawbSerial:integer):integer;
+function TI_CreateInvoiceXmlFRM.CreateFile(Const FileName:String;Const InvoiceSerial:Integer):Boolean;
 var
 //  FileName:string;
   TheDoc: IXmlDocument;
@@ -108,7 +109,6 @@ var
   temp,str:String;
   HawbId:String;
   Amount:Double;
-  INvoiceSErial:Integer;
  qrHawb:TksQuery;
 begin
 //   FileName:= 'C:\Data\TEST\Xml\decon2.xml';
@@ -124,28 +124,34 @@ begin
 
   TheDoc.Version := '1.0';
   TheDoc.Encoding := 'UTF-8';
-  RootNode := TheDoc.AddChild('MGMsg','http://www.w3.org/2001/XMLSchema-instance');
+  RootNode := TheDoc.AddChild('MSG','http://www.w3.org/2001/XMLSchema-instance');
 //I used Microsoft MSXML in the XMLDOC
 //  RootNode.Attributes['xmlns']:='invDHL';
-  RootNode.Attributes['xmlns:xsi']:='http://www.dhl.com/AMG';
-  RootNode.Attributes['xsi:schemaLocation']:='http://www.dhl.com/AMGSU01.XSD';
+
+  RootNode.Attributes['xmlns:xsi']:='http://www.w3.org/2001/XMLSchema-instance';
+  RootNode.Attributes['xmlns:xsd']:='http://www.w3.org/2001/XMLSchema';
+//  RootNode.Attributes['xsi:schemaLocation']:='http://www.w3.org/2001/XMLSchema';
 
 //   Rootnode.Attributes['xsi:noNamespaceSchemaLocation']:= 'DhlInvoice.xsd';
 
 
-  HeaderNode:=RootNode.AddChild('MsgHdr');
-
-  aNode:=HeaderNOde.AddChild('MsgTyp',-1);
-  aNode.Text:='MG-SU01';
-  aNode:= AddNodeText(HeaderNode, 'MsgMajVsn','1');
-  aNode:= AddNodeText(HeaderNode, 'MsgMinVsn','0');
+  HeaderNode:=RootNode.AddChild('Hdr');
+  AddNodeAtr(HeaderNode,'Ver','1.033');
+  AddNodeAtr(HeaderNode,'Dtm','1.033');
+  AddNodeAtr(HeaderNode,'GmtOff','1.033');
+//  aNode:= AddNodeText(HeaderNode, 'MsgMajVsn','1');
+//  aNode:= AddNodeText(HeaderNode, 'CrtnDm',FormatTimeStampUTCF(now));
 //  function ToUniversalTime(const ADateTime: TDateTime; const ForceDaylight: Boolean = False): TDateTime; inline;
+//  aNode:= AddNodeText(HeaderNode, 'LastProcessedDm',FormatTimeStampUTCF(now));
 
-  aNode:= AddNodeText(HeaderNode, 'CrtnDm',FormatTimeStampUTCF(now));
-  aNode:= AddNodeText(HeaderNode, 'LastProcessedDm',FormatTimeStampUTCF(now));
-  aNode:= AddNodeText(HeaderNode, 'MsgOrgnatorAppl','CAB');
-  aNode:= AddNodeText(HeaderNode, 'MsgGenAddr','LCA-GTW');
-  aNode:= AddNodeText(HeaderNode, 'LastProcessedBy','AMG');
+//  aNode:=HeaderNOde.AddChild('Sndr');
+   aNode := LDocument.CreateNode('Sndr', ntElement, '');
+   HeaderNode.ChildNodes.Add(aNode);
+   AddNodeAtr(aNode,'AppCd','1.033');
+   AddNodeAtr(aNode,'AppVer','1.033');
+
+
+
 
 /////////////////////////////////////////////////////
 
@@ -159,10 +165,10 @@ begin
 +'      where ha.serial_number = :HawbSerial';
 
     qrHawb:=TksQuery.Create(cn,str);
-    qrHawb.ParamByName('HawbSerial').AsInteger:= HawbSerial;
+    qrHawb.ParamByName('HawbSerial').AsInteger:= 11;
     qrHawb.Open;
 
-    HawbNode:=RootNOde.AddChild('CstmSts',-1);
+    HawbNode:=RootNOde.AddChild('Bd',-1);
     aNode:=AddNodeText(HawbNode,'ShpAWBNum',qrHawb.FieldByName('hab_id').AsString);
 
     aNode:=AddNodeText(HawbNode,'Tmstmp',FormatTimeStampUTCF(now));
@@ -182,21 +188,21 @@ begin
 
   TheDoc.SaveToFile(FileName);
   TheDoc.Active := false;
-  result:=1;
+  result:=True;
 
 //  TheDoc.SaveToXML(xmlText);
 //  Memo1.Lines.Text := xmlText;
 
 end;
 
-function TI_createWarehouseXmlFRM.FindSerials():TSerials;
+function TI_CreateInvoiceXmlFRM.FindSerials():TSerials;
 var
   qr:TksQuery;
   str:String;
   param:String;
   ParamsRec:TParameterRecord;
 begin
-  ParamsRec:=GetTheSystemParameter(cn,'IG1');
+  ParamsRec:=GetTheSystemParameter(cn,'IG6');
   result.minSerial:=ParamsRec.P_Integer1+1;
 
   qr:=TksQuery.Create(cn,'select max(inv.serial_number) as maxSer from Invoice_new inv');
@@ -209,13 +215,13 @@ begin
 
 end;
 
-procedure TI_createWarehouseXmlFRM.FormActivate(Sender: TObject);
+procedure TI_CreateInvoiceXmlFRM.FormActivate(Sender: TObject);
 var
  serialsNew:Tserials;
  ParamsRec:TParameterRecord;
 begin
 
-    ParamsRec:=GetTheSystemParameter(cn,'IG1');
+    ParamsRec:=GetTheSystemParameter(cn,'IG6');
     if ParamsRec.P_ID='' then begin
       MessageDlg('Folder path Required: Use Menu->System->Parms->System Params->Create XML File', mtError, [mbOK], 0);
       exit;
@@ -225,19 +231,19 @@ begin
 
 end;
 
-procedure TI_createWarehouseXmlFRM.FormCreate(Sender: TObject);
+procedure TI_CreateInvoiceXmlFRM.FormCreate(Sender: TObject);
 begin
 cn:=ClairDML.CabCOnnection;
 end;
 
-Function TI_createWarehouseXmlFRM.AddNodeText(FatherNode:IXMLNode;NodeName:String; NodeText:String):IXMLNode;
+Function TI_CreateInvoiceXmlFRM.AddNodeText(FatherNode:IXMLNode;NodeName:String; NodeText:String):IXMLNode;
 Begin
   result:= FatherNode.AddChild(NodeName,-1);
   result.Text:=NodeText;
 end;
 
 
-procedure TI_createWarehouseXmlFRM.Button1Click(Sender: TObject);
+procedure TI_CreateInvoiceXmlFRM.Button1Click(Sender: TObject);
 var
 st1:string;
 t1:tDateTime;
@@ -248,19 +254,19 @@ ShowMessage(FormatTimeStampUTCF(now));
 
 end;
 
-Function TI_createWarehouseXmlFRM.AddNodeAtr(FatherNode:IXMLNode;NodeName:String; NodeText:String):IXMLNode;
+Function TI_CreateInvoiceXmlFRM.AddNodeAtr(FatherNode:IXMLNode;NodeName:String; NodeText:String):IXMLNode;
 Begin
   result:= FatherNode.AddChild(NodeName,-1);
   result.Attributes['VALUE']:=NodeText;
 end;
 
-Function TI_createWarehouseXmlFRM.AddNodeAtr(FatherNode:IXMLNode;NodeName:String; AttributeName:String;AttributeText:String):IXMLNode;
+Function TI_CreateInvoiceXmlFRM.AddNodeAtr(FatherNode:IXMLNode;NodeName:String; AttributeName:String;AttributeText:String):IXMLNode;
 Begin
   result:= FatherNode.AddChild(NodeName,-1);
   result.Attributes[AttributeName]:=AttributeText;
 end;
 
-Function TI_createWarehouseXmlFRM.AddAtrribute(aNode:IXMLNode; AttributeName:String;AttributeText:String):IXMLNode;
+Function TI_CreateInvoiceXmlFRM.AddAtrribute(aNode:IXMLNode; AttributeName:String;AttributeText:String):IXMLNode;
 Begin
   aNode.Attributes[AttributeName]:=AttributeText;
   result:=aNode;

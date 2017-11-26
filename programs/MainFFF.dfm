@@ -120,12 +120,14 @@ object MainFRM: TMainFRM
     Margins.Bottom = 0
     Align = alTop
     BorderOuter = fsGroove
-    Caption = 'CAB-T 1.75'
+    Caption = 'CAB-T 1.76'
+    Ctl3D = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
     Font.Height = -48
     Font.Name = 'Bookman Old Style'
     Font.Style = [fsBold]
+    ParentCtl3D = False
     ParentFont = False
     RealTimeDrag = True
     SizeBarWidth = 1

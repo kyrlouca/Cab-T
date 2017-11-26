@@ -74,6 +74,7 @@ type
     WaveBTN: TRzButton;
     CabTDidBTN: TRzButton;
     TextInvoicesBTN: TRzButton;
+    InvoiceXMLBTN: TRzButton;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BitBtn2Click(Sender: TObject);
@@ -94,6 +95,7 @@ type
     procedure WaveBTNClick(Sender: TObject);
     procedure CabTDidBTNClick(Sender: TObject);
     procedure TextInvoicesBTNClick(Sender: TObject);
+    procedure InvoiceXMLBTNClick(Sender: TObject);
   private
     { Private declarations }
     cn:TIBCConnection;
@@ -130,6 +132,32 @@ if DialogDLG.Execute then begin
     FolderFLD.Text:=DialogDLG.SelectedPathName;
 end;
 
+end;
+
+procedure TM_ParametersFRM.InvoiceXMLBTNClick(Sender: TObject);
+
+begin
+  folderBTN.Visible:=true;
+ idlbl.Caption:='Code :';
+ int1lbl.Caption:='Last Sent XML Invoice  Serial';
+ int2lbl.Caption:='';
+ num1lbl.Caption:='';
+ str1lbl.Caption:='Folder to create Test XML Invoices';
+ str2lbl.Caption:='';
+str3lbl.Caption:=':';
+str4lbl.Caption:='';
+str5lbl.Caption:='';
+
+ With SystemParametersSQL do begin
+   Close;
+   SystemParametersSQL.SQL.Clear;
+   SystemParametersSQL.SQL.Add('Select * from system_parameters where parameter_id =''IG6'' ');
+   Open;
+   if SystemParametersSQL.IsEmpty then begin
+     ksExecSQLVar(cn,'insert into system_parameters(Parameter_id) values(:param) ',['IG6']);
+     SystemParametersSQL.Refresh;
+   end;
+ end;
 end;
 
 procedure TM_ParametersFRM.RzButton1Click(Sender: TObject);

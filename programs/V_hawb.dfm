@@ -968,6 +968,8 @@ object V_HawbFRM: TV_HawbFRM
           TabOrder = 0
           VisualStyle = vsClassic
           OnChanging = ClearanceRGPChanging
+          ExplicitLeft = -1
+          ExplicitTop = 19
         end
         object RelievedFLD: TwwDBComboBox
           Left = 184
@@ -1920,7 +1922,7 @@ object V_HawbFRM: TV_HawbFRM
             Left = 0
             Top = 0
             Width = 31
-            Height = 15
+            Height = 27
             Align = alLeft
             Caption = 'Items'
             Font.Charset = DEFAULT_CHARSET
@@ -1929,6 +1931,7 @@ object V_HawbFRM: TV_HawbFRM
             Font.Name = 'Arial'
             Font.Style = []
             ParentFont = False
+            ExplicitHeight = 15
           end
           object wwDBNavigator3: TwwDBNavigator
             Left = 31
@@ -2031,7 +2034,7 @@ object V_HawbFRM: TV_HawbFRM
             Left = 0
             Top = 0
             Width = 62
-            Height = 15
+            Height = 27
             Align = alLeft
             Caption = 'Comments'
             Font.Charset = DEFAULT_CHARSET
@@ -2040,6 +2043,7 @@ object V_HawbFRM: TV_HawbFRM
             Font.Name = 'Arial'
             Font.Style = []
             ParentFont = False
+            ExplicitHeight = 15
           end
           object wwDBNavigator1: TwwDBNavigator
             Left = 62
@@ -2259,11 +2263,12 @@ object V_HawbFRM: TV_HawbFRM
         object llFLD: TRzLabel
           Left = 0
           Top = 0
-          Width = 22
+          Width = 173
           Height = 27
           Align = alTop
           Caption = ' --'
           Transparent = True
+          ExplicitWidth = 22
         end
       end
       object Panel3: TPanel
@@ -3401,7 +3406,7 @@ object V_HawbFRM: TV_HawbFRM
     Left = 250
     Top = 5
     Bitmap = {
-      494C010110008800F40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010110008800F80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

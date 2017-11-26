@@ -85,13 +85,14 @@ uses
   R_GlobalDhlInvoices in 'R_GlobalDhlInvoices.pas' {R_GlobalDhlInvoicesFRM},
   M_HawbCharge in 'M_HawbCharge.pas' {M_HawbChargeFRM},
   M_deliveryTerm in 'M_deliveryTerm.pas' {M_deliveryTermFRM},
-  I_createWarehouseXml in 'I_createWarehouseXml.pas' {I_createWarehouseXmlFRM},
   R_MediumHawb in 'R_MediumHawb.pas' {R_MediumHawbFRM},
   R_mediumNew in 'R_mediumNew.pas' {R_MediumNewFRM},
   I_createInvoiceFile in 'I_createInvoiceFile.pas' {I_createInvoiceFileFRM},
   M_TariffCertificates in 'M_TariffCertificates.pas' {M_TariffCertificatesFRM},
   M_ChangeStatusBatch in 'M_ChangeStatusBatch.pas' {M_ChangeStatusBatchFRM},
-  M_STariffDelete in 'M_STariffDelete.pas' {M_STariffDeleteFRM};
+  M_STariffDelete in 'M_STariffDelete.pas' {M_STariffDeleteFRM},
+  I_createWarehouseXml in 'I_createWarehouseXml.pas' {I_createWarehouseXmlFRM},
+  I_createInvoiceXML in 'I_createInvoiceXML.pas' {I_CreateInvoiceXmlFRM};
 
 {$R *.RES}
 var
@@ -139,5 +140,8 @@ ReportMemoryLeaksOnShutdown := DebugHook <> 0;
   Application.CreateForm(TTestFormFRM, TestFormFRM);
   Application.CreateForm(TV_MawbHawbDML, V_MawbHawbDML);
   Application.CreateForm(TV_HawbFRM, V_HawbFRM);
+  Application.CreateForm(TI_CreateInvoiceXmlFRM, I_CreateInvoiceXmlFRM);
+  Application.CreateForm(TI_createWarehouseXmlFRM, I_createWarehouseXmlFRM);
+  Application.CreateForm(TI_CreateInvoiceXmlFRM, I_CreateInvoiceXmlFRM);
   Application.Run;
 end.

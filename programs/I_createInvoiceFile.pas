@@ -30,10 +30,14 @@ type
     ToFLD: TwwDBEdit;
     RzLabel1: TRzLabel;
     RzLabel2: TRzLabel;
-    CreateBTN: TRzBitBtn;
+    CreateAllXmlBTN: TRzBitBtn;
     CreateTextBTN: TRzBitBtn;
+    RzLabel3: TRzLabel;
+    RzLabel4: TRzLabel;
+    FromXMLFLD: TwwDBEdit;
+    ToXMLFLD: TwwDBEdit;
     procedure RzBitBtn1Click(Sender: TObject);
-    procedure CreateBTNClick(Sender: TObject);
+    procedure CreateAllXmlBTNClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure CreateTextBTNClick(Sender: TObject);
@@ -45,9 +49,12 @@ type
     Function  AddNodeAtr(FatherNode:IXMLNode;NodeName:String; AttributeName:String;AttributeText:String):IXMLNode; overload;
     Function  AddAtrribute(aNode:IXMLNode; AttributeName:String;AttributeText:String):IXMLNode;
   function FindSerials():TSerials;
+  function FindXMLSerials():TSerials;
 
   function CreateFile(Const FileName:String;Const FromSerial,ToSerial:Integer):TCreateSerials;
+//  function CreateXMLFiles(Const FileName:String;Const FromSerial,ToSerial:Integer):TCreateSerials;
   function CreateInvoiceFile(Const FileName:String;Const FromSerial,ToSerial:Integer):TCreateSerials;
+  function CreateXMLFile(Const FileName:String;Const MinInvoiceSerial, MaxInvoiceSerial:Integer):TCreateSerials;
 
   public
     { Public declarations }
@@ -60,9 +67,11 @@ implementation
 
 {$R *.dfm}
 
-uses U_ClairDML, G_KyrSQL, G_generalProcs;
+uses U_ClairDML, G_KyrSQL, G_generalProcs, I_createInvoiceXML;
 
-procedure TI_createInvoiceFileFRM.CreateBTNClick(Sender: TObject);
+procedure TI_createInvoiceFileFRM.CreateAllXmlBTNClick(Sender: TObject);
+Const
+  ParamID='IG6';
 var
   fileName:string;
   FromSerial,ToSerial:Integer;
@@ -71,35 +80,39 @@ var
   CreateSerials:TCreateSerials;
   qr:TksQuery;
   ParamsRec:TParameterRecord;
-begin
-exit;
+  I:Integer;
+  IsCreated:Boolean;
 
-  FromSerial:=StrToIntDef(FromFLD.Text,0);
-  ToSerial:=StrToIntDef(ToFLD.Text,0);
+begin
+
+  FromSerial:=StrToIntDef(FromXMLFLD.Text,0);
+  ToSerial:=StrToIntDef(ToXMLFLD.Text,0);
   if (ToSerial < FromSerial) then begin
     MessageDlg('Ending Serial must be Greater then Starting', mtError, [mbOK], 0);
     exit;
   end;
 
 
-
-  paramsRec:=GetTheSystemParameter(cn,'IG1');
+  paramsRec:=GetTheSystemParameter(cn,ParamID);
   if (not DirectoryExists(ParamsRec.P_String1)) then begin
-     MessageDlg('Directory Specified NOT valid. Menu->System->system params->create XML', mtError, [mbOK], 0);
+     MessageDlg('Directory Specified NOT valid. Menu->System->system params-> * create Test invoice XML', mtError, [mbOK], 0);
      exit;
   end;
+
   sysPath:=paramsRec.P_String1;
-//  ExtractFileDir( ExtractFilePath(Application.EXEName)  );
-  fileName:= sysPath+'\dhlCypInv_'+intToStr(FromSerial)+'_'+intToStr(ToSerial)+'_'+formatDateTime('yyyymmddhhnnss',now)+'.XML';
-//  fileName:='C:\Data\DelphiProjects\TestXSD\test1.xml';
-  CreateSerials:=CreateFile(filename,FromSerial,ToSerial);
-  if CreateSerials.CountRecs>0 then begin
-    ksExecSQLVar(cn,'update system_parameters sp set int_1= :lastSerial where sp.parameter_id= :paramId ',[CreateSerials.LastSerial,'IG1']);
-    SerialsNew:=FindSerials();
-    FromFLD.Text:=intToStr(serialsnew.minSerial);
-    ToFLD.Text:=intToStr(serialsnew.maxSerial);
-//    showMessage('a');
+  fileName:= sysPath+'\dhlXmlInv_'+intToStr(FromSerial)+'_'+intToStr(ToSerial)+'_'+formatDateTime('yyyymmddhhnnss',now)+'.Xyz';
+  FromSerial:=18517;
+  ToSerial:=18517;
+
+  for I:= FromSerial To ToSerial do begin
+    if not I_CreateInvoiceXmlFRM.CreateFile(filename,I) then begin
+      exit;
+    end;
   end;
+
+//    SerialsNew:=FindXMLSerials();
+//    FromFLD.Text:=intToStr(serialsnew.minSerial);
+//    ToFLD.Text:=intToStr(serialsnew.maxSerial);
 end;
 
 procedure TI_createInvoiceFileFRM.RzBitBtn1Click(Sender: TObject);
@@ -241,6 +254,16 @@ begin
 //  Memo1.Lines.Text := xmlText;
 
 end;
+
+
+  function TI_createInvoiceFileFRM.CreateXMLFile(Const FileName:String;Const MinInvoiceSerial, MaxInvoiceSerial:Integer):TCreateSerials;
+//var
+//  FileName:string;
+
+begin
+  I_CreateInvoiceXmlFRM.createFile(FileName,MaxInvoiceSerial);
+end;
+
 
 function TI_createInvoiceFileFRM.CreateInvoiceFile(Const FileName:String;Const FromSerial,ToSerial:Integer):TCreateSerials;
 var
@@ -424,6 +447,26 @@ begin
   end;
 
 end;
+function TI_createInvoiceFileFRM.FindXMLSerials():TSerials;
+var
+  qr:TksQuery;
+  str:String;
+  param:String;
+  ParamsRec:TParameterRecord;
+begin
+  ParamsRec:=GetTheSystemParameter(cn,'IG6');
+  result.minSerial:=ParamsRec.P_Integer1+1;
+
+  qr:=TksQuery.Create(cn,'select max(inv.serial_number) as maxSer from Invoice_new inv');
+  try
+    qr.Open;
+    Result.maxSerial:=qr.FieldByName('MaxSer').AsInteger;
+  finally
+    qr.Free;
+  end;
+
+end;
+
 
 procedure TI_createInvoiceFileFRM.FormActivate(Sender: TObject);
 var
@@ -440,6 +483,18 @@ begin
     SerialsNew:=FindSerials();
     FromFLD.Text:=intToStr(serialsnew.minSerial);
     ToFLD.Text:=intToStr(serialsnew.maxSerial);
+
+
+    ParamsRec:=GetTheSystemParameter(cn,'IG6');
+    if ParamsRec.P_ID='' then begin
+      MessageDlg('Folder path Required: Use Menu->System->Parms->System Params->* Create Test XML File', mtError, [mbOK], 0);
+      exit;
+    end;
+
+    SerialsNew:=FindXMLSerials();
+    FromXMLFLD.Text:=intToStr(serialsnew.minSerial);
+    ToXMLFLD.Text:=intToStr(serialsnew.maxSerial);
+
 
 
 end;

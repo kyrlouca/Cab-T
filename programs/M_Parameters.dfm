@@ -2,7 +2,7 @@ object M_ParametersFRM: TM_ParametersFRM
   Left = 262
   Top = 215
   Caption = 'M_ParametersFRM'
-  ClientHeight = 611
+  ClientHeight = 619
   ClientWidth = 1010
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -33,12 +33,12 @@ object M_ParametersFRM: TM_ParametersFRM
   end
   object Panel4: TPanel
     Left = 0
-    Top = 558
+    Top = 566
     Width = 1010
     Height = 53
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 550
+    ExplicitTop = 558
     object RzPanel1: TRzPanel
       Left = 909
       Top = 1
@@ -271,10 +271,10 @@ object M_ParametersFRM: TM_ParametersFRM
     Left = 0
     Top = 113
     Width = 1010
-    Height = 445
+    Height = 453
     Align = alClient
     TabOrder = 3
-    ExplicitHeight = 437
+    ExplicitHeight = 445
     object wwDBGrid1: TwwDBGrid
       Left = 40
       Top = 435
@@ -308,7 +308,7 @@ object M_ParametersFRM: TM_ParametersFRM
       Left = 16
       Top = 24
       Width = 1057
-      Height = 377
+      Height = 405
       Caption = 'Details'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -451,9 +451,9 @@ object M_ParametersFRM: TM_ParametersFRM
         ParentFont = False
       end
       object FolderBTN: TSpeedButton
-        Left = 665
+        Left = 675
         Top = 155
-        Width = 34
+        Width = 27
         Height = 23
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -594,17 +594,17 @@ object M_ParametersFRM: TM_ParametersFRM
         TabOrder = 7
       end
       object RzGroupBox1: TRzGroupBox
-        Left = 689
-        Top = 27
+        Left = 705
+        Top = 18
         Width = 185
-        Height = 347
+        Height = 368
         Caption = 'Selection'
         TabOrder = 8
         object SystemSelectBTN: TRzButton
           Left = 11
-          Top = 27
+          Top = 23
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'System'
           DoubleBuffered = True
@@ -620,9 +620,9 @@ object M_ParametersFRM: TM_ParametersFRM
         end
         object EmailBTN: TRzButton
           Left = 11
-          Top = 96
+          Top = 90
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'Email/SMS'
           DoubleBuffered = True
@@ -638,9 +638,9 @@ object M_ParametersFRM: TM_ParametersFRM
         end
         object DhlInvoiceBTN: TRzButton
           Left = 11
-          Top = 131
+          Top = 124
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'Create XML Invoices '
           Font.Charset = DEFAULT_CHARSET
@@ -654,9 +654,9 @@ object M_ParametersFRM: TM_ParametersFRM
         end
         object RzButton1: TRzButton
           Left = 11
-          Top = 232
+          Top = 259
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'Read XML Hawbs File'
           DoubleBuffered = True
@@ -672,9 +672,9 @@ object M_ParametersFRM: TM_ParametersFRM
         end
         object DHlGlobalBTN: TRzButton
           Left = 11
-          Top = 267
+          Top = 293
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'Read DHL Global Invoices '
           DoubleBuffered = True
@@ -690,9 +690,9 @@ object M_ParametersFRM: TM_ParametersFRM
         end
         object WarehouseBTN: TRzButton
           Left = 11
-          Top = 197
+          Top = 225
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'Create XML Warehouse'
           Font.Charset = DEFAULT_CHARSET
@@ -706,9 +706,9 @@ object M_ParametersFRM: TM_ParametersFRM
         end
         object WaveBTN: TRzButton
           Left = 11
-          Top = 61
+          Top = 56
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'Wave Duties'
           DoubleBuffered = True
@@ -724,9 +724,9 @@ object M_ParametersFRM: TM_ParametersFRM
         end
         object CabTDidBTN: TRzButton
           Left = 11
-          Top = 305
+          Top = 327
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'Read Cabex TDID HTML'
           DoubleBuffered = True
@@ -742,9 +742,9 @@ object M_ParametersFRM: TM_ParametersFRM
         end
         object TextInvoicesBTN: TRzButton
           Left = 11
-          Top = 163
+          Top = 191
           Width = 166
-          Height = 32
+          Height = 29
           Alignment = taLeftJustify
           Caption = 'Create Text Invoices'
           Font.Charset = DEFAULT_CHARSET
@@ -755,6 +755,22 @@ object M_ParametersFRM: TM_ParametersFRM
           ParentFont = False
           TabOrder = 8
           OnClick = TextInvoicesBTNClick
+        end
+        object InvoiceXMLBTN: TRzButton
+          Left = 11
+          Top = 158
+          Width = 166
+          Height = 29
+          Alignment = taLeftJustify
+          Caption = '* Create TEST XML Invoices '
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 9
+          OnClick = InvoiceXMLBTNClick
         end
       end
       object DBEdit9: TDBEdit
@@ -969,6 +985,6 @@ object M_ParametersFRM: TM_ParametersFRM
   end
   object DialogDLG: TRzSelectFolderDialog
     Left = 656
-    Top = 273
+    Top = 225
   end
 end

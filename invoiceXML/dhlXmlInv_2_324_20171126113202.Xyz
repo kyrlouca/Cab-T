@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MSG xmlns="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Hdr>
+		<Ver VALUE="1.033"/>
+		<Dtm VALUE="1.033"/>
+		<GmtOff VALUE="1.033"/>
+		<Sndr xmlns="">
+			<AppCd VALUE="1.033"/>
+			<AppVer VALUE="1.033"/>
+		</Sndr>
+	</Hdr>
+	<Bd>
+		<ShpAWBNum></ShpAWBNum>
+		<Tmstmp>2017-11-26 11:32:03+02:00</Tmstmp>
+		<ClrFlg>N</ClrFlg>
+		<ShpSts></ShpSts>
+		<OrgnSrvaCd></OrgnSrvaCd>
+		<DestSrvaCd></DestSrvaCd>
+	</Bd>
+</MSG>

@@ -488,7 +488,8 @@ begin
           end;
 
 
-    DORGN.Visible:=IsDeliveryOrder;
+//    DORGN.Visible:=IsDeliveryOrder;
+    DORGN.Visible:=false; //always false because they wanted it only on first copy
     DeliveryStampRGN.Visible:=NOt IsDeliveryOrder;
 
     if IsDeliveryOrder then begin

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MSG xmlns="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Hdr Ver="1.033" Dtm="1.033" GmtOff="1.033">
+		<Bd AppCd="1.033" AppVer="1.033" CtryCd="1.033" AppNm="1.033"/>
+	</Hdr>
+	<Bd>
+		<ShpAWBNum></ShpAWBNum>
+		<Tmstmp>2017-11-26 11:41:55+02:00</Tmstmp>
+		<ClrFlg>N</ClrFlg>
+		<ShpSts></ShpSts>
+		<OrgnSrvaCd></OrgnSrvaCd>
+		<DestSrvaCd></DestSrvaCd>
+	</Bd>
+</MSG>
