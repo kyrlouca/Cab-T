@@ -158,6 +158,15 @@ begin
 /////////////////////////////////////////////////////
 
     InvNode:=bdNode.AddChild('Inv',-1);
+      AddAtrribute(InvNode,'PMthTyCd','1.033');
+      AddAtrribute(InvNode,'InvDocTy','1.033');
+      aNode:=InvNode.AddChild('InvDocTy',-1);
+        AddAtrribute(aNode,'InvDcTyCd','1.033');
+      aNode:=InvNode.AddChild('InvAddInf',-1);
+        AddAtrribute(aNode,'AttNm','1.033');
+        AddAtrribute(aNode,'AttVal','1.033');
+
+
   try
     str:= 'select ha.serial_number,ha.hab_id,ha.fk_mawb_refer_number ,ha.date_registered'
 +'     ,ha.clearance_waiting_code,cwc.is_cleared'
@@ -192,6 +201,7 @@ begin
   shpNode:=bdNOde.AddChild('Shp',-1);
   AddAtrribute(shpNode,'id','id');
 
+  ///////////////////////////////////////
   aNode:=shpNOde.AddChild('ShpTr',-1);
   AddAtrribute(aNode,'DstSrvaCd','xx');
   AddAtrribute(aNode,'OrgSrvaCd','xx');
@@ -214,6 +224,21 @@ begin
   aNode:=bNOde.AddChild('SCCDev',-1);
   AddAtrribute(aNode,'CDevTyCd','xx');
   AddAtrribute(aNode,'CDevNo','xx');
+  ///////////////////////////////////////
+  aNode:=shpNOde.AddChild('ShpDsc',-1);
+  AddAtrribute(aNode,'DscGds','id');
+
+  bNode:=shpNOde.AddChild('ShpRef',-1);
+  AddAtrribute(bNode,'ShpRef','id');
+
+  aNode:=shpNOde.AddChild('ShpInDoc',-1);
+    bNode:=aNOde.AddChild('SDoc',-1);
+    AddAtrribute(bNode,'InctrmCd','id');
+
+  aNode:=shpNOde.AddChild('ShpRef',-1);
+    AddAtrribute(aNode,'ShpRef','id');
+    bNode:=aNOde.AddChild('TrcRefTy',-1);
+      AddAtrribute(bNode,'cd','id');
 
   aNode:=bdNOde.AddChild('GEvt',-1);
   AddAtrribute(aNode,'MvmtId','id');
