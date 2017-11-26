@@ -102,7 +102,7 @@ function TI_CreateInvoiceXmlFRM.CreateFile(Const FileName:String;Const InvoiceSe
 var
 //  FileName:string;
   TheDoc: IXmlDocument;
-  RootNode,HeaderNode,HawbNode,InvoicesNode,InvNode,invLineNode, bdNode,linesNode,aNode,AddressNode: IXmlNode;
+  RootNode,HeaderNode,HawbNode,InvoicesNode,InvNode,invLineNode,shpNode, bdNode,linesNode,aNode,bNode,AddressNode: IXmlNode;
   strXML:String;
   i,j:Integer;
   countRecs:integer;
@@ -189,15 +189,39 @@ begin
     qrHawb.Free;
   end;
 
-  aNode:=bdNOde.AddChild('Shp',-1);
-  AddAtrribute(aNode,'id','id');
+  shpNode:=bdNOde.AddChild('Shp',-1);
+  AddAtrribute(shpNode,'id','id');
+
+  aNode:=shpNOde.AddChild('ShpTr',-1);
+  AddAtrribute(aNode,'DstSrvaCd','xx');
+  AddAtrribute(aNode,'OrgSrvaCd','xx');
+  AddAtrribute(aNode,'MgNProdCd','xx');
+  AddAtrribute(aNode,'SActWgt','xx');
+  AddAtrribute(aNode,'PuDtm','xx');
+  AddAtrribute(aNode,'TrmTrdCd','xx');
+
+  bNode:=aNOde.AddChild('SCDtl',-1);
+  AddAtrribute(bNode,'CRlTyCd','xx');
+  AddAtrribute(bNode,'CustNm','xx');
+  AddAtrribute(bNode,'CntNm','xx');
+  AddAtrribute(bNode,'Addr1','xx');
+  AddAtrribute(bNode,'Addr2','xx');
+  AddAtrribute(bNode,'Addr3','xx');
+  AddAtrribute(bNode,'Zip','xx');
+  AddAtrribute(bNode,'CtyNm','xx');
+  AddAtrribute(bNode,'CDivCd','xx');
+
+  aNode:=bNOde.AddChild('SCCDev',-1);
+  AddAtrribute(aNode,'CDevTyCd','xx');
+  AddAtrribute(aNode,'CDevNo','xx');
 
   aNode:=bdNOde.AddChild('GEvt',-1);
   AddAtrribute(aNode,'MvmtId','id');
   AddAtrribute(aNode,'EvtDtm','id');
 
   aNode:=bdNOde.AddChild('Mvmt',-1);
-  AddAtrribute(aNode,'MvmtSc','id');
+  bNode:=aNOde.AddChild('MvmtSc',-1);
+  AddAtrribute(bNode,'MvmtSchDDtm','id');
 
   TheDoc.SaveToFile(FileName);
   TheDoc.Active := false;
