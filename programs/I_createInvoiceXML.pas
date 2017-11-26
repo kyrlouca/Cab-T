@@ -102,7 +102,8 @@ function TI_CreateInvoiceXmlFRM.CreateFile(Const FileName:String;Const InvoiceSe
 var
 //  FileName:string;
   TheDoc: IXmlDocument;
-  RootNode,HeaderNode,HawbNode,InvoicesNode,InvNode,invLineNode,shpNode, bdNode,linesNode,aNode,bNode,AddressNode: IXmlNode;
+  HawbNOde:IXmlNode;
+  RootNode,HeaderNode,LinesNode,InvoicesNode,InvNode,invLineNode,shpNode, bdNode,aNode,bNode,AddressNode: IXmlNode;
   strXML:String;
   i,j:Integer;
   countRecs:integer;
@@ -165,7 +166,15 @@ begin
       aNode:=InvNode.AddChild('InvAddInf',-1);
         AddAtrribute(aNode,'AttNm','1.033');
         AddAtrribute(aNode,'AttVal','1.033');
+    //Here are the lines
+    LinesNode:=InvNode.AddChild('CntOrdLnTr',-1);
+      AddAtrribute(LinesNode,'OrdLnNo','1.033');
+      AddAtrribute(LinesNode,'PayChrg','1.033');
 
+      //for each invlice line
+      aNode:=LinesNode.AddChild('OrdLnTrAdInf',-1);
+        AddAtrribute(aNode,'AttNm','1.033');
+        AddAtrribute(aNode,'AttVal','1.033');
 
   try
     str:= 'select ha.serial_number,ha.hab_id,ha.fk_mawb_refer_number ,ha.date_registered'
@@ -181,7 +190,7 @@ begin
     qrHawb.Open;
 
     HawbNode:=InvNode.AddChild('af',-1);
-    aNode:=AddNodeText(HawbNode,'ShpAWBNum',qrHawb.FieldByName('hab_id').AsString);
+    bNode:=AddNodeText(HawbNode,'ShpAWBNum',qrHawb.FieldByName('hab_id').AsString);
 
     aNode:=AddNodeText(HawbNode,'Tmstmp',FormatTimeStampUTCF(now));
 
