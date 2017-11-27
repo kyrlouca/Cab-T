@@ -269,6 +269,8 @@ begin
       aNode:=InvNode.AddChild('InvAddInf',-1);
         AddAtrribute(aNode,'AttNm','1.033');
         AddAtrribute(aNode,'AttVal','1.033');
+
+
     //Here are the lines
     LinesNode:=InvNode.AddChild('CntOrdLnTr',-1);
       AddAtrribute(LinesNode,'OrdLnNo','1.033');
