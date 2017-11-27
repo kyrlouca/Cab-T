@@ -117,8 +117,6 @@ object I_CreateInvoiceXmlFRM: TI_CreateInvoiceXmlFRM
     Align = alClient
     BorderOuter = fsNone
     TabOrder = 2
-    ExplicitLeft = 8
-    ExplicitTop = 54
     object RzLabel2: TRzLabel
       Left = 40
       Top = 75

@@ -101,13 +101,14 @@ begin
 
   sysPath:=paramsRec.P_String1;
   fileName:= sysPath+'\dhlXmlInv_'+intToStr(FromSerial)+'_'+intToStr(ToSerial)+'_'+formatDateTime('yyyymmddhhnnss',now)+'.Xyz';
-  FromSerial:=18517;
-  ToSerial:=18517;
+//  FromSerial:=18517;
+//  ToSerial:=18517;
 
   for I:= FromSerial To ToSerial do begin
     if not I_CreateInvoiceXmlFRM.CreateFile(filename,I) then begin
       exit;
     end;
+    exit;
   end;
 
 //    SerialsNew:=FindXMLSerials();
