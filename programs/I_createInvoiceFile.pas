@@ -100,16 +100,18 @@ begin
   end;
 
   sysPath:=paramsRec.P_String1;
-  fileName:= sysPath+'\dhlXmlInv_'+intToStr(FromSerial)+'_'+intToStr(ToSerial)+'_'+formatDateTime('yyyymmddhhnnss',now)+'.Xyz';
+  fileName:= sysPath+'\dhlXmlInv_'+intToStr(FromSerial)+'_'+intToStr(ToSerial)+'_'+formatDateTime('yyyymmddhhnnss',now)+'.Xml';
 //  FromSerial:=18517;
 //  ToSerial:=18517;
 
   for I:= FromSerial To ToSerial do begin
-    if not I_CreateInvoiceXmlFRM.CreateFile(filename,I) then begin
-      exit;
+    if I_CreateInvoiceXmlFRM.CreateFile(filename,I) then begin
+      ksExecSQLVar(cn, 'update system_parameters set int_1= :last where parameter_id=:param',[i,paramId])
+    end else begin
+    //   write to a file maybe
     end;
-    exit;
   end;
+  ShowMessage('finished. Files created in '+syspath);
 
 //    SerialsNew:=FindXMLSerials();
 //    FromFLD.Text:=intToStr(serialsnew.minSerial);

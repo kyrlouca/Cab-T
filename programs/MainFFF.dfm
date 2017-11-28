@@ -120,7 +120,7 @@ object MainFRM: TMainFRM
     Margins.Bottom = 0
     Align = alTop
     BorderOuter = fsGroove
-    Caption = 'CAB-T 1.76'
+    Caption = 'CAB-T 1.80'
     Ctl3D = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
@@ -285,11 +285,12 @@ object MainFRM: TMainFRM
     TabOrder = 2
     object Button4: TButton
       Left = 296
-      Top = 14
+      Top = 24
       Width = 75
       Height = 25
       Caption = 'TestUnit'
       TabOrder = 0
+      Visible = False
       OnClick = Button4Click
     end
     object Button15: TButton

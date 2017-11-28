@@ -153,8 +153,10 @@ begin
     qrHawb.ParamByName('InvoiceSerial').AsInteger:= InvoiceSerial;
     qrHawb.Open;
 
-    if qrHawb.IsEmpty then
+    if qrHawb.IsEmpty then  begin
+      result:=false;
      exit;
+    end;
 
 
     HawbId:=qrHawb.FieldByName('hawb_id').AsString;
@@ -206,8 +208,12 @@ begin
 
   TheDoc.Version := '1.0';
   TheDoc.Encoding := 'UTF-8';
-  RootNode := TheDoc.AddChild('MSG','http://www.w3.org/2001/XMLSchema-instance');
-//I used Microsoft MSXML in the XMLDOC
+//  RootNode := TheDoc.AddChild('MSG','http://www.w3.org/2001/XMLSchema-instance');
+  RootNode := TheDoc.AddChild('MSG');
+
+
+
+  //I used Microsoft MSXML in the XMLDOC
 //  RootNode.Attributes['xmlns']:='invDHL';
 
   RootNode.Attributes['xmlns:xsi']:='http://www.w3.org/2001/XMLSchema-instance';
@@ -393,6 +399,7 @@ begin
   TheDoc.SaveToFile(FileName);
   TheDoc.Active := false;
   result:=True;
+
 
 //  TheDoc.SaveToXML(xmlText);
 //  Memo1.Lines.Text := xmlText;
