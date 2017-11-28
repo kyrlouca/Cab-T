@@ -103,7 +103,7 @@ var
 //  FileName:string;
   TheDoc: IXmlDocument;
   HawbNOde:IXmlNode;
-  RootNode,HeaderNode,LinesNode,InvoicesNode,InvNode,invLineNode,shpNode, bdNode,aNode,bNode,AddressNode: IXmlNode;
+  RootNode,HeaderNode,LinesNode,InvoicesNode,InvNode,invLineNode,shpNode,ShpTrNode, bdNode,aNode,bNode,AddressNode: IXmlNode;
   strXML:String;
   i,j:Integer;
   countRecs:integer;
@@ -122,9 +122,11 @@ var
   inv_CustomerAccount,Inv_payType:String;
   inv_TotalPieces:Integer;
   inv_amount:Double;
+  line_amount:Double;
 
   Amount:Double;
- qrHawb:TksQuery;
+ qrHawb, qrL:TksQuery;
+
 begin
 //   FileName:= 'C:\Data\TEST\Xml\decon2.xml';
 //  MawbSerial:=12268;
@@ -137,7 +139,7 @@ begin
   +'      ha.description,ha.fk_country_origin,'
   +'      ha.sender_name,ha.sender_address_1,ha.sender_address_2,ha.sender_address_3,ha.sender_post_code,ha.sender_city,ha.sender_country,'
   +'      ha.Origin_station ,ha.Destination_station, ha.weight ,ha.is_prepaid,'
-  +'      HA.total_num_of_pieces, ha.fk_clearance_instruction,'
+  +'      HA.total_num_of_pieces, ha.fk_clearance_instruction,NUMBER_OF_PARCELS,'
   +'      cu.address1, cu.address2,cu.address3, cu.address_post_code,cu.address_city,cu.tel_no1,cu.account_number '
   +'  from'
   +'      invoice_new inv left outer join'
@@ -266,78 +268,100 @@ begin
         AddAtrribute(aNode,'SrcFcCd','GTW');
         AddAtrribute(aNode,'SrcCtryNm','CYPRUS');
 
-      aNode:=InvNode.AddChild('InvAddInf',-1);
-        AddAtrribute(aNode,'AttNm','1.033');
-        AddAtrribute(aNode,'AttVal','1.033');
+//      aNode:=InvNode.AddChild('InvAddInf',-1);
+//        AddAtrribute(aNode,'AttNm','1.033');
+//        AddAtrribute(aNode,'AttVal','1.033');
 
+    str:=
+   '   select'
+  +'    line.*, dt.xml_code, dt.description'
+  +'  from'
+  +'    invoice_line line left outer join'
+  +'    duty_type dt on dt.duty_code=line.duty_type'
+  +'  where line.fk_invoice_serial= :InvoiceSerial ';
 
-    //Here are the lines
-    LinesNode:=InvNode.AddChild('CntOrdLnTr',-1);
-      AddAtrribute(LinesNode,'OrdLnNo','1.033');
-      AddAtrribute(LinesNode,'PayChrg','1.033');
+    qrL:=TksQuery.Create(cn,str);
+    try
+      qrL.ParamByName('InvoiceSerial').AsInteger:= InvoiceSerial;
+      qrL.Open;
+      I:=0;
+      while not qrL.Eof do begin
+        Inc(I);
 
+        LinesNode:=InvNode.AddChild('CntOrdLnTr',-1);
+        AddAtrribute(linesNode,'OrdLnNo',intToStr(i));
+
+        line_Amount:=qrL.FieldByName('amount').AsFloat;
+        AddAtrribute(linesNode,'PayChrg',gpFloatToStr(line_Amount,2));
       //for each invlice line
-      aNode:=LinesNode.AddChild('OrdLnTrAdInf',-1);
-        AddAtrribute(aNode,'AttNm','1.033');
-        AddAtrribute(aNode,'AttVal','1.033');
+        aNode:=LinesNode.AddChild('OrdLnTrAdInf',-1);
+          AddAtrribute(aNode,'AttNm',qrL.FieldByName('xml_code').AsString);
+          AddAtrribute(aNode,'AttVal',qrL.FieldByName('description').AsString);
+        qrl.Next;
+      end;
+    finally
+      qrl.Free;
+
+    end;
+
 
 
   shpNode:=bdNOde.AddChild('Shp',-1);
   AddAtrribute(shpNode,'id',HawbId);
 
   ///////////////////////////////////////
-  aNode:=shpNOde.AddChild('ShpTr',-1);
-  AddAtrribute(aNode,'DstSrvaCd',Ha_destinationStation);
-  AddAtrribute(aNode,'OrgSrvaCd',Ha_OriginStation);
+  shpTrNode:=shpNOde.AddChild('ShpTr',-1);
+  AddAtrribute(shpTrNode,'DstSrvaCd',Ha_destinationStation);
+  AddAtrribute(ShpTrNode,'OrgSrvaCd',Ha_OriginStation);
 //  AddAtrribute(aNode,'MgNProdCd','xx');
-  AddAtrribute(aNode,'SActWgt',gpFloatToStr(ha_weight,2));
+  AddAtrribute(ShpTrNode,'SActWgt',gpFloatToStr(ha_weight,2));
 //  AddAtrribute(aNode,'PuDtm','xx');
 //  AddAtrribute(aNode,'TrmTrdCd','xx');
 ////////////////////////////////////////////
-  bNode:=aNOde.AddChild('SCDtl',-1);
-  AddAtrribute(bNode,'CRlTyCd','BT');
-  AddAtrribute(bNode,'CustNm','xx');//standard for normal, Special for DTP, and Customer Account if exists
-  AddAtrribute(bNode,'CntNm',Cu_name);
-  AddAtrribute(bNode,'Addr1',CU_addr1);
-  AddAtrribute(bNode,'Addr2',cu_addr2);
-  AddAtrribute(bNode,'Addr3',Cu_addr3);
-  AddAtrribute(bNode,'Zip',cu_postCode);
-  AddAtrribute(bNode,'CtyNm',cu_city);
-  AddAtrribute(bNode,'CDivCd',Cu_phone);
+  bNode:=ShpTrNode.AddChild('SCDtl',-1);
+    AddAtrribute(bNode,'CRlTyCd','BT');
+    AddAtrribute(bNode,'CustNm',Cu_name);//standard for normal, Special for DTP, and Customer Account if exists
+    AddAtrribute(bNode,'CntNm','.');
+    AddAtrribute(bNode,'Addr1',CU_addr1);
+    AddAtrribute(bNode,'Addr2',cu_addr2);
+    AddAtrribute(bNode,'Addr3',Cu_addr3);
+    AddAtrribute(bNode,'Zip',cu_postCode);
+    AddAtrribute(bNode,'CtyNm',cu_city);
+    AddAtrribute(bNode,'CDivCd',Cu_city);
 
-  aNode:=bNOde.AddChild('SCCDev',-1);
-  AddAtrribute(aNode,'CDevTyCd','xx');
-  AddAtrribute(aNode,'CDevNo','xx');
+    aNode:=bNOde.AddChild('SCCDev',-1);
+      AddAtrribute(aNode,'CDevTyCd','TEL');
+      AddAtrribute(aNode,'CDevNo',cU_PHONE);
   ///////////////////////////////////////
-    bNode:=aNOde.AddChild('SCDtl',-1);
-  AddAtrribute(bNode,'CRlTyCd','RV');
-  AddAtrribute(bNode,'CustNm','xx');//standard for normal, Special for DTP, and Customer Account if exists
-  AddAtrribute(bNode,'CntNm',Cu_Name);
-  AddAtrribute(bNode,'Addr1',CU_addr1);
-  AddAtrribute(bNode,'Addr2',cu_addr2);
-  AddAtrribute(bNode,'Addr3',Cu_addr3);
-  AddAtrribute(bNode,'Zip',cu_postCode);
-  AddAtrribute(bNode,'CtyNm',cu_city);
-  AddAtrribute(bNode,'CDivCd',Cu_phone);
+  bNode:=ShpTrNOde.AddChild('SCDtl',-1);
+    AddAtrribute(bNode,'CRlTyCd','RV');
+    AddAtrribute(bNode,'CustNm',Cu_name);//standard for normal, Special for DTP, and Customer Account if exists
+    AddAtrribute(bNode,'CntNm','.');
+    AddAtrribute(bNode,'Addr1',CU_addr1);
+    AddAtrribute(bNode,'Addr2',cu_addr2);
+    AddAtrribute(bNode,'Addr3',Cu_addr3);
+    AddAtrribute(bNode,'Zip',cu_postCode);
+    AddAtrribute(bNode,'CtyNm',cu_city);
+    AddAtrribute(bNode,'CDivCd',Cu_city);
 
-  aNode:=bNOde.AddChild('SCCDev',-1);
-  AddAtrribute(aNode,'CDevTyCd','xx');
-  AddAtrribute(aNode,'CDevNo','xx');
+    aNode:=bNOde.AddChild('SCCDev',-1);
+      AddAtrribute(aNode,'CDevTyCd','TEL');
+      AddAtrribute(aNode,'CDevNo',Cu_phone);
   ///////////////////////////////////////
-  bNode:=aNOde.AddChild('SCDtl',-1);
-  AddAtrribute(bNode,'CRlTyCd','SP');
-  AddAtrribute(bNode,'CustNm','xx');//standard for normal, Special for DTP, and Customer Account if exists
-  AddAtrribute(bNode,'CntNm',Se_name);
-  AddAtrribute(bNode,'Addr1',Se_addr1);
-  AddAtrribute(bNode,'Addr2',Se_addr2);
-  AddAtrribute(bNode,'Addr3',Se_addr3);
-  AddAtrribute(bNode,'Zip',Se_postCode);
-  AddAtrribute(bNode,'CtyNm',Se_city);
-  AddAtrribute(bNode,'CDivCd',Se_phone);
+  bNode:=shpTrNOde.AddChild('SCDtl',-1);
+    AddAtrribute(bNode,'CRlTyCd','SP');
+    AddAtrribute(bNode,'CustNm',Cu_name);//standard for normal, Special for DTP, and Customer Account if exists
+    AddAtrribute(bNode,'CntNm','.');
+    AddAtrribute(bNode,'Addr1',Se_addr1);
+    AddAtrribute(bNode,'Addr2',Se_addr2);
+    AddAtrribute(bNode,'Addr3',Se_addr3);
+    AddAtrribute(bNode,'Zip',Se_postCode);
+    AddAtrribute(bNode,'CtyNm',Se_city);
+    AddAtrribute(bNode,'CDivCd',Se_city);
 
-  aNode:=bNOde.AddChild('SCCDev',-1);
-  AddAtrribute(aNode,'CDevTyCd','xx');
-  AddAtrribute(aNode,'CDevNo','xx');
+//    aNode:=bNOde.AddChild('SCCDev',-1);
+//      AddAtrribute(aNode,'CDevTyCd','TEL');
+//      AddAtrribute(aNode,'CDevNo','');
   ///////////////////////////////////////
 
   ///
