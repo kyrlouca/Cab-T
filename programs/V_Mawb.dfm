@@ -74,7 +74,7 @@ object V_MawbFRM: TV_MawbFRM
     Top = 51
     Width = 1190
     Height = 800
-    ActivePage = MawbDetailsTS
+    ActivePage = SavedTs
     Align = alClient
     Font.Charset = GREEK_CHARSET
     Font.Color = clWindowText
@@ -1818,10 +1818,6 @@ object V_MawbFRM: TV_MawbFRM
       Caption = 'References'
       ImageIndex = 4
       OnExit = ReferencesTSExit
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object RzPanel5: TRzPanel
         Left = 0
         Top = 0
@@ -2647,10 +2643,6 @@ object V_MawbFRM: TV_MawbFRM
       Caption = 'Partial Hawbs'
       ImageIndex = 6
       OnEnter = PartialHawbTSEnter
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel15: TPanel
         Left = 0
         Top = 0
@@ -2980,10 +2972,6 @@ object V_MawbFRM: TV_MawbFRM
     object SavedTs: TTabSheet
       Caption = 'Saved hawbs'
       ImageIndex = 8
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel32: TPanel
         Left = 0
         Top = 715
@@ -3749,7 +3737,7 @@ object V_MawbFRM: TV_MawbFRM
     Left = 1217
     Top = 91
     Bitmap = {
-      494C010102000400080210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004000C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3892,7 +3880,7 @@ object V_MawbFRM: TV_MawbFRM
     Left = 618
     Top = 29
     Bitmap = {
-      494C010118008800EC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010118008800F00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
