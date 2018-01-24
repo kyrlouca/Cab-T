@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MSG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Hdr Id="INV-POD" Ver="1.033" Dtm="2017-11-28 15:02:30" GmtOff="7">
+		<Sndr AppCd="CABT" AppVer="1.80" CtryCd="CY" AppNm="CABT" PrcsId="CABT "/>
+	</Hdr>
+	<Bd>
+		<Inv PMthTyCd="CSH" TotAmt="  3.900 " TotChrgWgt="  3.000 " TotNOfPcs="1" PayCurCd="EUR">
+			<InvDocTy InvDcTyCd="REG" StCd="C"/>
+			<GI SrcCtryCd="CY" SrcSrvaCd="LCA" SrcFcCd="GTW" SrcCtryNm="CYPRUS"/>
+			<CntOrdLnTr OrdLnNo="1" PayChrg="   3.90 ">
+				<OrdLnTrAdInf AttNm="VATX" AttVal="VAT"/>
+			</CntOrdLnTr>
+		</Inv>
+		<Shp id="1366862792">
+			<ShpTr DstSrvaCd="LCA" OrgSrvaCd="HKG" SActWgt="   3.00 ">
+				<SCDtl CRlTyCd="BT" CustNm="ANDREAS MANOULLOS" CntNm="." Addr1="" Addr2="" Addr3="" Zip="" CtyNm="" CDivCd="">
+					<SCCDev CDevTyCd="TEL" CDevNo=""/>
+				</SCDtl>
+				<SCDtl CRlTyCd="RV" CustNm="ANDREAS MANOULLOS" CntNm="." Addr1="" Addr2="" Addr3="" Zip="" CtyNm="" CDivCd="">
+					<SCCDev CDevTyCd="TEL" CDevNo=""/>
+				</SCDtl>
+				<SCDtl CRlTyCd="SP" CustNm="ANDREAS MANOULLOS" CntNm="." Addr1="1 FLOOR PARK INDUSTRIAL SUPPLIER" Addr2="XILU CUIGANG HUAIDE YONG FU SHENZHE" Addr3="IF RTO,PLEASE RETURN TO HKG ADDRESS" Zip="" CtyNm="HONG KONG" CDivCd="HONG KONG"/>
+			</ShpTr>
+			<ShpDsc DscGds="PHONE CASE,"/>
+			<ShpRef ShpRef="id"/>
+			<ShpRef ShpRef="id">
+				<TrcRefTy cd="id"/>
+			</ShpRef>
+		</Shp>
+		<GEvt MvmtId="id" EvtDtm="id"/>
+		<Mvmt>
+			<MvmtSc MvmtSchDDtm="id"/>
+		</Mvmt>
+	</Bd>
+</MSG>
