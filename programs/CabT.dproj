@@ -269,9 +269,6 @@
         <DCCReference Include="R_UnclearedHawbs.pas">
             <Form>R_UnclearedHawbsFRM</Form>
         </DCCReference>
-        <DCCReference Include="R_uninvoicedHawbs.pas">
-            <Form>R_uninvoicedHawbsFRM</Form>
-        </DCCReference>
         <DCCReference Include="R_CustsomersAll.pas">
             <Form>R_CustomersAllFRM</Form>
         </DCCReference>
@@ -371,6 +368,14 @@
         </DCCReference>
         <DCCReference Include="I_createInvoiceXML.pas">
             <Form>I_CreateInvoiceXmlFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="R_nonReceivedInvoices.pas">
+            <Form>R_nonReceivedInvoicesFRM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="R_uninvoicedHawbs.pas">
+            <Form>R_uninvoicedHawbsFRM</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <None Include="TariffsProject.todo">

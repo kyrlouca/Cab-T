@@ -102,6 +102,7 @@ type
     Batch1: TMenuItem;
     ClearingStatus1: TMenuItem;
     DeleteHiddenTariff1: TMenuItem;
+    MissingFileInvoices1: TMenuItem;
     procedure Button2Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
@@ -171,6 +172,7 @@ type
     procedure InvoiceReport2Click(Sender: TObject);
     procedure ClearingStatus1Click(Sender: TObject);
     procedure DeleteHiddenTariff1Click(Sender: TObject);
+    procedure MissingFileInvoices1Click(Sender: TObject);
   private
     { Private declarations }
     cn:TIBCCOnnection;
@@ -216,7 +218,7 @@ uses M_BaseTariff, M_Units, V_hawb, MN_DutyTYpe,
   R_uninvoicedHawbs, R_CustsomersAll, R_MawbPerformanceNew, R_HawbsToReceive,
   M_port, H_Help, SN_ModifyPassword, M_EmailMessages, P_MultiEDE, M_DeleteMawb,
   I_createInvoiceFile, M_CustomPaymentCodes, R_GlobalDhlInvoices,
-  M_ChangeStatusBatch, M_STariffDelete;
+  M_ChangeStatusBatch, M_STariffDelete, R_nonReceivedInvoices;
 
 
 
@@ -463,6 +465,11 @@ end;
 procedure TMainFRM.MawbPerformance1Click(Sender: TObject);
 begin
  gpShowModal(TR_MawbPerformanceNewFRM);
+end;
+
+procedure TMainFRM.MissingFileInvoices1Click(Sender: TObject);
+begin
+  gpShowModal(TR_nonReceivedInvoicesFRM);
 end;
 
 procedure TMainFRM.NonInvoicedReport1Click(Sender: TObject);

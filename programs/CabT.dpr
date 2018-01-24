@@ -61,7 +61,6 @@ uses
   TestForm in 'TestForm.pas' {TestFormFRM},
   H_HawbPartial in 'H_HawbPartial.pas' {H_hawbPartialFRM},
   R_UnclearedHawbs in 'R_UnclearedHawbs.pas' {R_UnclearedHawbsFRM},
-  R_uninvoicedHawbs in 'R_uninvoicedHawbs.pas' {R_uninvoicedHawbsFRM},
   R_CustsomersAll in 'R_CustsomersAll.pas' {R_CustomersAllFRM},
   R_MawbPerformanceNew in 'R_MawbPerformanceNew.pas' {R_MawbPerformanceNewFRM},
   R_deliveryOrderLow1 in 'R_deliveryOrderLow1.pas' {R_DeliveryOrderLow1FRM},
@@ -92,7 +91,9 @@ uses
   M_ChangeStatusBatch in 'M_ChangeStatusBatch.pas' {M_ChangeStatusBatchFRM},
   M_STariffDelete in 'M_STariffDelete.pas' {M_STariffDeleteFRM},
   I_createWarehouseXml in 'I_createWarehouseXml.pas' {I_createWarehouseXmlFRM},
-  I_createInvoiceXML in 'I_createInvoiceXML.pas' {I_CreateInvoiceXmlFRM};
+  I_createInvoiceXML in 'I_createInvoiceXML.pas' {I_CreateInvoiceXmlFRM},
+  R_nonReceivedInvoices in 'R_nonReceivedInvoices.pas' {R_nonReceivedInvoicesFRM},
+  R_uninvoicedHawbs in 'R_uninvoicedHawbs.pas' {R_uninvoicedHawbsFRM};
 
 {$R *.RES}
 var
@@ -143,5 +144,7 @@ ReportMemoryLeaksOnShutdown := DebugHook <> 0;
   Application.CreateForm(TI_CreateInvoiceXmlFRM, I_CreateInvoiceXmlFRM);
   Application.CreateForm(TI_createWarehouseXmlFRM, I_createWarehouseXmlFRM);
   Application.CreateForm(TI_CreateInvoiceXmlFRM, I_CreateInvoiceXmlFRM);
+  Application.CreateForm(TR_nonReceivedInvoicesFRM, R_nonReceivedInvoicesFRM);
+  Application.CreateForm(TR_uninvoicedHawbsFRM, R_uninvoicedHawbsFRM);
   Application.Run;
 end.

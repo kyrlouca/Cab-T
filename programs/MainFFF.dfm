@@ -120,7 +120,7 @@ object MainFRM: TMainFRM
     Margins.Bottom = 0
     Align = alTop
     BorderOuter = fsGroove
-    Caption = 'CAB-T 1.81'
+    Caption = 'CAB-T 1.82'
     Ctl3D = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
@@ -457,6 +457,7 @@ object MainFRM: TMainFRM
     UpdateTransaction = write
     SQL.Strings = (
       'select * from duty_relieve_item')
+    Constraints = <>
     Left = 376
     Top = 144
     object t1SERIAL_NUMBER: TIntegerField
@@ -585,6 +586,10 @@ object MainFRM: TMainFRM
       object UninvoicedHawbs1: TMenuItem
         Caption = 'Uninvoiced Hawbs'
         OnClick = UninvoicedHawbs1Click
+      end
+      object MissingFileInvoices1: TMenuItem
+        Caption = 'Non Received File Invoices'
+        OnClick = MissingFileInvoices1Click
       end
       object N1: TMenuItem
         Caption = '-'
